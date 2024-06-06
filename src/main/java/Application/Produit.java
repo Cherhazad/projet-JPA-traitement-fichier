@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,8 +33,7 @@ public class Produit {
 	@Column(name = "SCORE_NUTRITIONNEL")
 	private int scoreNutritionnel;
 	//A faire : un ensemble d'autres attributs pour stocker les différentes valeurs nutritionnelles (énergie, sel, etc.)
-	
-	private Set<Additif> additifs = new HashSet<>();
+
 	
 	
 	/** Constructeur
@@ -42,27 +42,33 @@ public class Produit {
 	public Produit() {
 		super();
 	}
-
+	
 	/** Constructeur
+	 * @param id
 	 * @param categorie
 	 * @param marque
 	 * @param scoreNutritionnel
 	 * @param ingredients
-	 * @param additifs
 	 * @param allergenes
+	 * @param marques
+	 * @param categories
+	 * @param additifs
 	 */
-	public Produit(Categorie categorie, Marque marque, int scoreNutritionnel, Set<Ingredient> ingredients,
-			Set<Additif> additifs, Set<Allergene> allergenes) {
+	public Produit(int id, Categorie categorie, Marque marque, int scoreNutritionnel, Set<Ingredient> ingredients,
+			Set<Allergene> allergenes, Marque marques, Categorie categories, Additif additifs) {
 		super();
+		this.id = id;
 		this.categorie = categorie;
 		this.marque = marque;
 		this.scoreNutritionnel = scoreNutritionnel;
 		this.ingredients = ingredients;
-		this.additifs = additifs;
 		this.allergenes = allergenes;
+		this.marques = marques;
+		this.categories = categories;
+		this.additifs = additifs;
 	}
 
-	
+
 	@ManyToMany
 	@JoinTable(name = "INGREDIENTS_PRODUITS",
 		joinColumns = @JoinColumn(name = "ID_PRO", referencedColumnName = "ID"),
@@ -86,6 +92,8 @@ public class Produit {
 	@JoinColumn(name = "ID_CATEGORIE")
 	private Categorie categories;
 	
+	@Embedded
+	private Additif additifs;
 	
 	/** Getter pour categorie
 	 * @return the categorie
@@ -143,19 +151,6 @@ public class Produit {
 		this.ingredients = ingredients;
 	}
 
-	/** Getter pour additifs
-	 * @return the additifs
-	 */
-	public Set<Additif> getAdditifs() {
-		return additifs;
-	}
-
-	/** Setter pour additifs
-	 * @param additifs the additifs to set
-	 */
-	public void setAdditifs(Set<Additif> additifs) {
-		this.additifs = additifs;
-	}
 
 	/** Getter pour allergenes
 	 * @return the allergenes
@@ -169,12 +164,6 @@ public class Produit {
 	 */
 	public void setAllergenes(Set<Allergene> allergenes) {
 		this.allergenes = allergenes;
-	}
-
-	@Override
-	public String toString() {
-		return "Produit [categorie=" + categorie + ", marque=" + marque + ", scoreNutritionnel=" + scoreNutritionnel
-				+ "]";
 	}
 
 	/** Getter pour id
@@ -218,8 +207,27 @@ public class Produit {
 	public void setCategories(Categorie categories) {
 		this.categories = categories;
 	}
+
+	/** Getter pour additifs
+	 * @return the additifs
+	 */
+	public Additif getAdditifs() {
+		return additifs;
+	}
+
+	/** Setter pour additifs
+	 * @param additifs the additifs to set
+	 */
+	public void setAdditifs(Additif additifs) {
+		this.additifs = additifs;
+	}
 	
 	
+	@Override
+	public String toString() {
+		return "Produit [categorie=" + categorie + ", marque=" + marque + ", scoreNutritionnel=" + scoreNutritionnel
+				+ "]";
+	}
 	
 	
 }
