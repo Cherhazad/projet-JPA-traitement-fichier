@@ -30,8 +30,11 @@ public class Produit {
 	@Column(name = "MARQUE")
 	private Marque marque;
 	
+	@Column(name = "NOM")
+	private String nom;
+	
 	@Column(name = "SCORE_NUTRITIONNEL")
-	private int scoreNutritionnel;
+	private String scoreNutritionnel;
 	//A faire : un ensemble d'autres attributs pour stocker les différentes valeurs nutritionnelles (énergie, sel, etc.)
 
 	
@@ -54,10 +57,9 @@ public class Produit {
 	 * @param categories
 	 * @param additifs
 	 */
-	public Produit(int id, Categorie categorie, Marque marque, int scoreNutritionnel, Set<Ingredient> ingredients,
+	public Produit(Categorie categorie, Marque marque, String scoreNutritionnel, Set<Ingredient> ingredients,
 			Set<Allergene> allergenes, Marque marques, Categorie categories, Additif additifs) {
 		super();
-		this.id = id;
 		this.categorie = categorie;
 		this.marque = marque;
 		this.scoreNutritionnel = scoreNutritionnel;
@@ -126,14 +128,14 @@ public class Produit {
 	/** Getter pour scoreNutritionnel
 	 * @return the scoreNutritionnel
 	 */
-	public int getScoreNutritionnel() {
+	public String getScoreNutritionnel() {
 		return scoreNutritionnel;
 	}
 
 	/** Setter pour scoreNutritionnel
 	 * @param scoreNutritionnel the scoreNutritionnel to set
 	 */
-	public void setScoreNutritionnel(int scoreNutritionnel) {
+	public void setScoreNutritionnel(String scoreNutritionnel) {
 		this.scoreNutritionnel = scoreNutritionnel;
 	}
 
